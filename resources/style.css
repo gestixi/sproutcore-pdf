@@ -1,0 +1,59 @@
+// ==========================================================================
+// Project:   SproutCore PDF
+// Copyright: ©2014 GestiXi
+// Author:    Nicolas BADIA (nicolas@gestixi.com) and contributors
+// License:   Licensed under MIT license (see license.js)
+// ==========================================================================
+
+
+.sc-pdf-toolbar { 
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.3) !important;
+  border-top: none !important;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
+.sc-pdf-text-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  color: #000;
+  font-family: sans-serif;
+  overflow: hidden;
+
+  > div {
+    color: transparent;
+    position: absolute;
+    line-height: 1;
+    white-space: pre;
+    cursor: text;
+  }
+
+  .highlight {
+    margin: -1px;
+    padding: 1px;
+
+    background-color: rgba(180, 0, 170, 0.2);
+    border-radius: 4px;
+  }
+
+  .highlight.begin {
+    border-radius: 4px 0px 0px 4px;
+  }
+
+  .highlight.end {
+    border-radius: 0px 4px 4px 0px;
+  }
+
+  .highlight.middle {
+    border-radius: 0px;
+  }
+
+  .highlight.selected {
+    background-color: rgba(0, 100, 0, 0.2);
+  }
+}
