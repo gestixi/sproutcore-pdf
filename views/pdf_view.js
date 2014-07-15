@@ -241,6 +241,8 @@ SC.PdfView = SC.View.extend({
       canvasLayer = this.get('canvasLayer'),
       textLayer;
 
+    if (!canvasLayer) return;
+
     canvasView.adjust({
       width: viewport.width,
       height: viewport.height,
