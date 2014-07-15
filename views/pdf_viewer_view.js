@@ -5,11 +5,11 @@
 // License:   Licensed under MIT license (see license.js)
 // ==========================================================================
 
-sc_require('pdf_view');
-sc_require('pdf_toolbar_view');
+sc_require('views/pdf_view');
+sc_require('views/pdf_toolbar_view');
 
 /** @class
-  
+
   @extends SC.View
   @author Nicolas BADIA
 */
