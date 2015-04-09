@@ -197,6 +197,8 @@ SC.PdfView = SC.View.extend({
   //
 
   getDocument: function() {
+    this.destroyDocument();
+
     var that = this,
       value = this.get('value'),
       pdfDoc = PDFJS.getDocument(value);
@@ -287,6 +289,25 @@ SC.PdfView = SC.View.extend({
 
     this.isRender = true;
     this.isRendering = false;
+  },
+
+
+  // ..........................................................
+  // Destroy
+  //
+
+  destroy: function() {
+    this.destroyDocument();
+    sc_super();
+  },
+
+  destroyDocument: function() {
+    var pdfDoc =  this.get('pdfDoc');
+
+    if (pdfDoc) {
+      pdfDoc.destroy();
+      this.set('pdfDoc', null);
+    }
   },
 
 
