@@ -174,7 +174,6 @@ SC.PdfView = SC.View.extend({
   }.property().cacheable(),
 
 
-
   // ..........................................................
   // Observers
   //
@@ -208,7 +207,6 @@ SC.PdfView = SC.View.extend({
     });
   },
 
-
   onLoad: function(pdfDoc) {
     this.set('pdfDoc', pdfDoc);
 
@@ -218,7 +216,6 @@ SC.PdfView = SC.View.extend({
 
     this.renderPage();
   },
-
 
   renderPage: function() {
     if (this.isRendering) return;
@@ -307,6 +304,8 @@ SC.PdfView = SC.View.extend({
     if (pdfDoc) {
       pdfDoc.destroy();
       this.set('pdfDoc', null);
+      var canvasLayer = this.get('canvasLayer');
+      canvasLayer.getContext('2d').clearRect(0, 0, canvasLayer.width, canvasLayer.height);
     }
   },
 
