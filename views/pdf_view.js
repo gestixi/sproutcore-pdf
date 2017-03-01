@@ -196,8 +196,6 @@ SC.PdfView = SC.View.extend({
   //
 
   getDocument: function() {
-    this.destroyDocument();
-
     var that = this,
       value = this.get('value'),
       pdfDoc = PDFJS.getDocument(value);
@@ -208,6 +206,7 @@ SC.PdfView = SC.View.extend({
   },
 
   onLoad: function(pdfDoc) {
+    this.destroyDocument();
     this.set('pdfDoc', pdfDoc);
 
     var isEmpty = pdfDoc.numPages === 0;
@@ -218,15 +217,14 @@ SC.PdfView = SC.View.extend({
   },
 
   renderPage: function() {
-    if (this.isRendering) return;
-    this.isRendering = true;
-
     var that = this,
       pdfDoc = this.get('pdfDoc'),
       currPage = this.get('currentPage');
 
     pdfDoc.getPage(currPage).then(function(page) {
-      SC.run(function() { that._renderPage(page); });
+      if (pdfDoc === that.get('pdfDoc')) {
+        SC.run(function() { that._renderPage(page); });
+      }
     });
   },
 
@@ -285,7 +283,6 @@ SC.PdfView = SC.View.extend({
 
 
     this.isRender = true;
-    this.isRendering = false;
   },
 
 
