@@ -6,14 +6,14 @@
 // ==========================================================================
 
 /** @class
-  
+
   @extends SC.View
   @author Nicolas BADIA
 */
 SC.PdfToolbarView = SC.View.extend({
   layout: { top: 0, centerX: 0, height: 30, width: 350 },
 
-  classNames: ['sc-pdf-toolbar'], 
+  classNames: ['sc-pdf-toolbar'],
 
   pdfView: null,
 
@@ -28,14 +28,14 @@ SC.PdfToolbarView = SC.View.extend({
 
   pageUp: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
-    icon: 'glyphicons up_arrow',
+    icon: 'fa fa-arrow-up',
     target: SC.outlet('parentView.pdfView'),
     action: 'pageUp',
   }),
 
   pageDown: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
-    icon: 'glyphicons down_arrow',
+    icon: 'fa fa-arrow-down',
     target: SC.outlet('parentView.pdfView'),
     action: 'pageDown',
   }),
@@ -52,14 +52,14 @@ SC.PdfToolbarView = SC.View.extend({
 
   zoomOut: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
-    icon: 'glyphicons zoom_out',
+    icon: 'fa fa-search-minus',
     target: SC.outlet('parentView.pdfView'),
     action: 'zoomIn',
   }),
 
   zoomIn: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
-    icon: 'glyphicons zoom_in',
+    icon: 'fa fa-search-plus',
     target: SC.outlet('parentView.pdfView'),
     action: 'zoomOut',
   }),
@@ -76,7 +76,7 @@ SC.PdfToolbarView = SC.View.extend({
   print: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
     marginBefore: 20,
-    icon: 'glyphicons print',
+    icon: 'fa fa-print',
     target: SC.outlet('parentView.pdfView'),
     action: 'print',
   }),
