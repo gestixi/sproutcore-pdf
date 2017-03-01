@@ -54,14 +54,14 @@ SC.PdfToolbarView = SC.View.extend({
     layout: { centerY: 0, height: 24, width: 30 },
     icon: 'fa fa-search-minus',
     target: SC.outlet('parentView.pdfView'),
-    action: 'zoomIn',
+    action: 'zoomOut',
   }),
 
   zoomIn: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
     icon: 'fa fa-search-plus',
     target: SC.outlet('parentView.pdfView'),
-    action: 'zoomOut',
+    action: 'zoomIn',
   }),
 
 

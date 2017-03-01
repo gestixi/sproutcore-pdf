@@ -6,12 +6,12 @@
 // ==========================================================================
 
 /** @class
-  
+
   @extends SC.View
   @author Nicolas BADIA
 */
 SC.PdfView = SC.View.extend({
-  
+
   /**
     Url of the pdf
 
@@ -19,7 +19,7 @@ SC.PdfView = SC.View.extend({
     @default null
   */
   value: null,
-  
+
   /**
     The pdf object
   */
@@ -49,7 +49,7 @@ SC.PdfView = SC.View.extend({
   }),
 
   canvasView: SC.View.extend({
-      
+
     render: function(context) {
       context.push('<canvas></canvas>');
     },
@@ -64,13 +64,13 @@ SC.PdfView = SC.View.extend({
   pageDown: function() {
     var numPages = this.get('numPages'),
       currentPage = this.get('currentPage');
-    
+
     if (currentPage < numPages) this.incrementProperty('currentPage');
   },
 
   pageUp: function() {
     var currentPage = this.get('currentPage');
-    
+
     if (currentPage > 1) this.decrementProperty('currentPage');
   },
 
@@ -78,16 +78,16 @@ SC.PdfView = SC.View.extend({
 
   pageLengthLabel: function () {
     var numPages = this.get('numPages');
-  
+
     return '_of %@'.loc(numPages);
   }.property('numPages').cacheable(),
 
-  zoomOut: function() {
+  zoomIn: function() {
     var scale = this.get('scale');
     if (scale < 4) this.set('_scale', scale+.1);
   },
 
-  zoomIn: function() {
+  zoomOut: function() {
     var scale = this.get('scale');
     if (scale > .25) this.set('_scale', scale-.1);
   },
@@ -110,7 +110,7 @@ SC.PdfView = SC.View.extend({
     var scale = this.get('_scale'),
       items = this._defaultScaleSelectItems,
       isInclude = false;
-  
+
     items.forEach(function(item) {
       if (item.value === scale) isInclude = true;
     }, this);
@@ -121,7 +121,7 @@ SC.PdfView = SC.View.extend({
     }
 
     this.set('scaleSelectItem', scale);
-  
+
     return items;
   }.property('_scale').cacheable(),
 
@@ -136,11 +136,11 @@ SC.PdfView = SC.View.extend({
     if (SC.typeOf(scaleSelectItem) !== SC.T_NUMBER) {
       ret = 1;
     }
-  
+
     return ret;
   }.property('scaleSelectItem').cacheable(),
 
-  print: function () {  
+  print: function () {
     this.doPrint();
   },
 
@@ -155,7 +155,7 @@ SC.PdfView = SC.View.extend({
 
     scrollView = scrollView.create();
     canvasView = canvasView.create();
-    
+
     this.appendChild(scrollView);
 
     scrollView.set('contentView', canvasView);
@@ -257,7 +257,7 @@ SC.PdfView = SC.View.extend({
     ctx.restore();
 
     /*
-    // TODO Not working 
+    // TODO Not working
     // textLayer is needed to allow text selection.
 
     var textLayerDiv = null;
@@ -304,6 +304,7 @@ SC.PdfView = SC.View.extend({
     if (pdfDoc) {
       pdfDoc.destroy();
       this.set('pdfDoc', null);
+
       var canvasLayer = this.get('canvasLayer');
       canvasLayer.getContext('2d').clearRect(0, 0, canvasLayer.width, canvasLayer.height);
     }
@@ -331,7 +332,7 @@ SC.PdfView = SC.View.extend({
         }, 1);
       };
     }
-    
+
     iframe.src = this.get('value');
   },
 
