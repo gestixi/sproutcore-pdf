@@ -83,17 +83,20 @@ SC.PdfView = SC.View.extend({
   }.property('numPages').cacheable(),
 
   zoomIn: function() {
-    var scale = this.get('scale');
-    if (scale < 4) this.set('_scale', scale+.1);
+    var scale = this.get('scale'),
+      offset = scale < 1 ? .1 : .25;
+
+    if (scale < 7.5) this.set('_scale', scale+offset);
   },
 
   zoomOut: function() {
-    var scale = this.get('scale');
-    if (scale > .25) this.set('_scale', scale-.1);
+    var scale = this.get('scale'),
+      offset = scale < 1 ? .1 : .25;
+    if (scale > .25) this.set('_scale', scale-offset);
   },
 
 
-  _defaultScaleSelectItems: [
+  scaleSelectItems: [
     // TODO { title: '_pageScaleAuto'.loc(), value: 'pageScaleAuto' },
     // TODO { title: '_pageScaleActual'.loc(), value: 'pageScaleActual' },
     // TODO { title: '_pageScaleFit'.loc(), value: 'pageScaleFit' },
@@ -104,41 +107,30 @@ SC.PdfView = SC.View.extend({
     { title: '125%', value: 1.25 },
     { title: '150%', value: 1.5 },
     { title: '200%', value: 2 },
+    { title: '300%', value: 3 },
+    { title: '400%', value: 4 },
+    { title: '500%', value: 5 }
   ],
 
-  scaleSelectItems: function () {
-    var scale = this.get('_scale'),
-      items = this._defaultScaleSelectItems,
-      isInclude = false;
+  scaleSelectItem: 1,
 
-    items.forEach(function(item) {
-      if (item.value === scale) isInclude = true;
-    }, this);
+  scale: 1,
 
-    if (!isInclude) {
-      items = SC.A(items);
-      items.insertAt(4, { title: parseInt(scale*100)+'%', value: scale });
-    }
+  scaleName: null,
 
+  scaleSelectItemDC: function () {
+    var scaleSelectItem = this.get('scaleSelectItem');
+    if (scaleSelectItem) this.set('scale', scaleSelectItem);
+    else this.set('scale', this.get('_scale'));
+  }.observes('scaleSelectItem'),
+
+  _scaleDC: function () {
+    var scale = this.get('_scale');
+    this.set('scaleName', (scale*100)+'%');
     this.set('scaleSelectItem', scale);
+    this.set('scale', scale);
+  }.observes('_scale'),
 
-    return items;
-  }.property('_scale').cacheable(),
-
-  scaleSelectItem: 'pageScaleAuto',
-
-  _scale: 1,
-
-  scale: function () {
-    var scaleSelectItem = this.get('scaleSelectItem'),
-      ret = scaleSelectItem;
-
-    if (SC.typeOf(scaleSelectItem) !== SC.T_NUMBER) {
-      ret = 1;
-    }
-
-    return ret;
-  }.property('scaleSelectItem').cacheable(),
 
   print: function () {
     this.doPrint();

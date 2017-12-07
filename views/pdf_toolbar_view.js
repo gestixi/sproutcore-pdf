@@ -67,6 +67,7 @@ SC.PdfToolbarView = SC.View.extend({
 
   scaleSelect: SC.SelectView.extend({
     layout: { centerY: 0, height: 24, width: 150 },
+    emptyNameBinding: SC.Binding.oneWay('.parentView.pdfView.scaleName'),
     itemsBinding: SC.Binding.oneWay('.parentView.pdfView.scaleSelectItems'),
     itemTitleKey: 'title',
     itemValueKey: 'value',
