@@ -190,7 +190,7 @@ SC.PdfView = SC.View.extend({
   getDocument: function() {
     var that = this,
       value = this.get('value'),
-      pdfDoc = PDFJS.getDocument(value);
+      pdfDoc = window.pdfjsLib.getDocument(value);
 
     pdfDoc.then(function(pdfDoc) {
       SC.run(function() { that.onLoad(pdfDoc); });
