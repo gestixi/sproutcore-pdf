@@ -190,9 +190,9 @@ SC.PdfView = SC.View.extend({
   getDocument: function() {
     var that = this,
       value = this.get('value'),
-      pdfDoc = window.pdfjsLib.getDocument(value);
+      loadingTask = window.pdfjsLib.getDocument(value);
 
-    pdfDoc.then(function(pdfDoc) {
+    loadingTask.promise.then(function(pdfDoc) {
       SC.run(function() { that.onLoad(pdfDoc); });
     });
   },
@@ -223,10 +223,8 @@ SC.PdfView = SC.View.extend({
   _renderPage: function(page) {
     this.pdfPage = page;
 
-    var pdfDoc = this.get('pdfDoc'),
-      viewport = page.getViewport(this.get('scale')),
+    var viewport = page.getViewport({ scale: this.get('scale') }),
       canvasView = this.get('canvasView'),
-      currPage = this.get('currentPage'),
       canvasLayer = this.get('canvasLayer'),
       textLayer;
 
