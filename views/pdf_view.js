@@ -47,6 +47,12 @@ SC.PdfView = SC.View.extend({
   // Internal views
   //
 
+  loaderView: SC.View.extend({
+    render: function(context) {
+      context.push('<div class="sk-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>');
+    },
+  }),
+
   scrollView: SC.ScrollView.extend({
     backgroundColor: '#FFF',
 
@@ -173,16 +179,20 @@ SC.PdfView = SC.View.extend({
   //
 
   createChildViews: function() {
-    var scrollView = this.get('scrollView'),
+    var loaderView = this.get('loaderView'),
+      scrollView = this.get('scrollView'),
       canvasView = this.get('canvasView');
 
+    loaderView = loaderView.create();
     scrollView = scrollView.create();
     canvasView = canvasView.create();
 
     this.appendChild(scrollView);
+    this.appendChild(loaderView);
 
     scrollView.set('contentView', canvasView);
 
+    this.set('loaderView', loaderView);
     this.set('scrollView', scrollView);
     this.set('canvasView', canvasView);
   },
@@ -219,6 +229,9 @@ SC.PdfView = SC.View.extend({
   //
 
   getDocument: function() {
+    this.get('loaderView').set('isVisible', true);
+    this.get('canvasView').set('isVisible', false);
+
     var that = this,
       url = this.get('url'),
       loadingTask = window.pdfjsLib.getDocument(url);
@@ -240,6 +253,9 @@ SC.PdfView = SC.View.extend({
   },
 
   renderPage: function() {
+    this.get('loaderView').set('isVisible', true);
+    this.get('canvasView').set('isVisible', false);
+
     var that = this,
       pdfDoc = this.get('pdfDoc'),
       currPage = this.get('currentPage');
@@ -252,6 +268,9 @@ SC.PdfView = SC.View.extend({
   },
 
   _renderPage: function(page) {
+    this.get('loaderView').set('isVisible', false);
+    this.get('canvasView').set('isVisible', true);
+
     this.pdfPage = page;
 
     var viewport = page.getViewport({ scale: this.get('scale') }),
