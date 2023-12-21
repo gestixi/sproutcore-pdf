@@ -21,7 +21,15 @@ SC.PdfViewerView = SC.View.extend({
     @type String
     @default null
   */
-  value: null,
+  url: null,
+
+  /**
+    Name of the pdf
+
+    @type String
+    @default null
+  */
+  name: null,
 
   childViews: ['pdfView', 'toolbarView'],
 
@@ -30,7 +38,8 @@ SC.PdfViewerView = SC.View.extend({
   }),
 
   pdfView: SC.PdfView.extend({
-    valueBinding: SC.Binding.oneWay('.parentView.value'),
+    urlBinding: SC.Binding.oneWay('.parentView.url'),
+    nameBinding: SC.Binding.oneWay('.parentView.name'),
   }),
 
 

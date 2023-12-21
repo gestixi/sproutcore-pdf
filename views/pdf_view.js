@@ -18,7 +18,15 @@ SC.PdfView = SC.View.extend({
     @type String
     @default null
   */
-  value: null,
+  url: null,
+
+  /**
+    Name of the pdf
+
+    @type String
+    @default null
+  */
+  name: null,
 
   /**
     The pdf object
@@ -131,9 +139,32 @@ SC.PdfView = SC.View.extend({
     this.set('scale', scale);
   }.observes('_scale'),
 
-
   print: function () {
-    this.doPrint();
+    var iframe = this._printIframe;
+    if (!this._printIframe) {
+      iframe = this._printIframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+
+      iframe.style.display = 'none';
+      iframe.onload = function() {
+        setTimeout(function() {
+          iframe.focus();
+          iframe.contentWindow.print();
+        }, 1);
+      };
+    }
+
+    iframe.src = this.get('url');
+  },
+
+  download: function () {
+    var link = document.createElement('a'),
+      url = this.get('url'),
+      name = this.get('name');
+
+    link.href = url;
+    link.download = name;
+    link.dispatchEvent(new MouseEvent('click'));
   },
 
 
@@ -170,9 +201,9 @@ SC.PdfView = SC.View.extend({
   // Observers
   //
 
-  valueDidChange: function() {
+  urlDidChange: function() {
     this.invokeOnceLater('getDocument');
-  }.observes('value'),
+  }.observes('url'),
 
   currentPageDidChange: function() {
     if (this.isRender) this.renderPage();
@@ -189,8 +220,8 @@ SC.PdfView = SC.View.extend({
 
   getDocument: function() {
     var that = this,
-      value = this.get('value'),
-      loadingTask = window.pdfjsLib.getDocument(value);
+      url = this.get('url'),
+      loadingTask = window.pdfjsLib.getDocument(url);
 
     loadingTask.promise.then(function(pdfDoc) {
       SC.run(function() { that.onLoad(pdfDoc); });
@@ -295,32 +326,6 @@ SC.PdfView = SC.View.extend({
       var canvasLayer = this.get('canvasLayer');
       canvasLayer.getContext('2d').clearRect(0, 0, canvasLayer.width, canvasLayer.height);
     }
-  },
-
-
-  // ..........................................................
-  // Print
-  //
-
-  /**
-    Loads the PDF inside an iframe and print it.
-  */
-  doPrint: function () {
-    var iframe = this._printIframe;
-    if (!this._printIframe) {
-      iframe = this._printIframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-
-      iframe.style.display = 'none';
-      iframe.onload = function() {
-        setTimeout(function() {
-          iframe.focus();
-          iframe.contentWindow.print();
-        }, 1);
-      };
-    }
-
-    iframe.src = this.get('value');
   },
 
 });

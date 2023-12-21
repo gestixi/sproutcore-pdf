@@ -24,7 +24,7 @@ SC.PdfToolbarView = SC.View.extend({
     spacing: 5
   },
 
-  childViews: 'pageUp pageDown pageNumber numPages zoomOut zoomIn scaleSelect print'.w(),
+  childViews: 'pageUp pageDown pageNumber numPages zoomOut zoomIn scaleSelect print download'.w(),
 
   pageUp: SC.ButtonView.extend({
     layout: { centerY: 0, height: 24, width: 30 },
@@ -80,6 +80,13 @@ SC.PdfToolbarView = SC.View.extend({
     icon: 'fa fa-print',
     target: SC.outlet('parentView.pdfView'),
     action: 'print',
+  }),
+
+  download: SC.ButtonView.extend({
+    layout: { centerY: 0, height: 24, width: 30 },
+    icon: 'fa fa-download',
+    target: SC.outlet('parentView.pdfView'),
+    action: 'download',
   }),
 
 
