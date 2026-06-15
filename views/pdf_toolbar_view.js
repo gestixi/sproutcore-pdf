@@ -11,7 +11,7 @@
   @author Nicolas BADIA
 */
 SC.PdfToolbarView = SC.View.extend({
-  layout: { top: 0, centerX: 0, height: 30, width: 350 },
+  layout: { top: 0, centerX: 0, height: 34, width: 350 },
 
   classNames: ['sc-pdf-toolbar'],
 
@@ -27,38 +27,38 @@ SC.PdfToolbarView = SC.View.extend({
   childViews: 'pageUp pageDown pageNumber numPages zoomOut zoomIn scaleSelect print download'.w(),
 
   pageUp: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     icon: 'fa fa-arrow-up',
     target: SC.outlet('parentView.pdfView'),
     action: 'pageUp',
   }),
 
   pageDown: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     icon: 'fa fa-arrow-down',
     target: SC.outlet('parentView.pdfView'),
     action: 'pageDown',
   }),
 
   pageNumber: SC.TextFieldView.extend({
-    layout: { centerY: 0, height: 22, width: 30 },
+    layout: { centerY: 0, height: 26, width: 36 },
     valueBinding: '.parentView.pdfView.currentPage',
   }),
 
   numPages: SC.LabelView.extend({
-    layout: { centerY: 0, height: 24, width: 75 },
+    layout: { centerY: 0, height: 28, width: 75 },
     valueBinding: SC.Binding.oneWay('.parentView.pdfView.pageLengthLabel'),
   }),
 
   zoomOut: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     icon: 'fa fa-search-minus',
     target: SC.outlet('parentView.pdfView'),
     action: 'zoomOut',
   }),
 
   zoomIn: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     icon: 'fa fa-search-plus',
     target: SC.outlet('parentView.pdfView'),
     action: 'zoomIn',
@@ -66,7 +66,7 @@ SC.PdfToolbarView = SC.View.extend({
 
 
   scaleSelect: SC.SelectView.extend({
-    layout: { centerY: 0, height: 24, width: 150 },
+    layout: { centerY: 0, height: 28, width: 75 },
     emptyNameBinding: SC.Binding.oneWay('.parentView.pdfView.scaleName'),
     itemsBinding: SC.Binding.oneWay('.parentView.pdfView.scaleSelectItems'),
     itemTitleKey: 'title',
@@ -75,7 +75,7 @@ SC.PdfToolbarView = SC.View.extend({
   }),
 
   print: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     marginBefore: 20,
     icon: 'fa fa-print',
     target: SC.outlet('parentView.pdfView'),
@@ -83,7 +83,7 @@ SC.PdfToolbarView = SC.View.extend({
   }),
 
   download: SC.ButtonView.extend({
-    layout: { centerY: 0, height: 24, width: 30 },
+    layout: { centerY: 0, height: 28, width: 36 },
     icon: 'fa fa-download',
     target: SC.outlet('parentView.pdfView'),
     action: 'download',
